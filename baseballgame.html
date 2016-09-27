@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+baseball game
+<!--
+rule
+1. 공격 횟수는 7번 (7번 안에 3스트라이크면 승리)
+2. 정답 숫자는 중복 되지 않는다
+3. 첫번째 자리 숫자는 0이 될 수 없다
+4. 숫자와 자리가 맞으면 스트라이크
+5. 숫자만 맞으면 볼
+6. 다 틀리면 아웃 (게임은 끝나지 않는다)
+ -->
+<br/>
+<input type="text">
+<input type="text">
+<input type="text">
+<br/>
+result <span id="resultPlace"></span>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var result = [];
+        for(i=0; i<3; i++){
+            result[i] = result.push(Math.floor(Math.random() * 10)) ;
+            i++;
+        }
+        console.log(result)
+    })
+</script> 
+</body>
+</html>

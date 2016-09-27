@@ -26,9 +26,15 @@ result <span id="resultPlace"></span>
 <script type="text/javascript">
     $(document).ready(function(){
         var result = [];
-        for(i=0; i<3; i++){
-            result[i] = result.push(Math.floor(Math.random() * 10)) ;
-            i++;
+        for(var i=0; i<3; i++){
+            result.push(Math.floor(Math.random() * 10));
+            if(i==0){
+                console.log("첫번째");
+            }else if(i==1){
+                console.log("두번째");
+            }else{
+                console.log("세번째");
+            }
         }
         console.log(result)
     })

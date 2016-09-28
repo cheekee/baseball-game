@@ -18,26 +18,58 @@ rule
 6. 다 틀리면 아웃 (게임은 끝나지 않는다)
  -->
 <br/>
-<input type="text">
-<input type="text">
-<input type="text">
+<input id="predResult1" type="text" value="">
+<input id="predResult2" type="text" value="">
+<input id="predResult3" type="text" value="">
+<input id="swingBtn" type="button" value="swing">
 <br/>
 result <span id="resultPlace"></span>
 <script type="text/javascript">
+
+    var result = [];  //정답 3자리 숫자가 담길 변수
+    var strikeCnt = 0;
+    var ballCnt = 0;
+    
+    //정답 숫자 세팅
+    for(var i=0; i<3; i++){
+        var resultEle = Math.floor(Math.random() * 10);
+        while(i==0 && resultEle==0){
+            resultEle = Math.floor(Math.random() * 10);
+        };
+        while(i==1 && resultEle==result[0]){
+            resultEle = Math.floor(Math.random() * 10);
+        };
+        while(i==2 && resultEle==result[0] || resultEle==result[1]){
+            resultEle = Math.floor(Math.random() * 10);
+        };
+            result.push(resultEle);
+    };
+    console.log("정답 : "+result);
+    //swing check
+    function swingCheck(){
+        var predResult1 = $('#predResult1').val();
+        var predResult2 = $('#predResult2').val();
+        var predResult3 = $('#predResult3').val();
+        if(result[0]==predResult1){
+            strikeCnt += 1;
+        }else{
+            console.log("ssssssssssssssssssssssssss");
+            if(result.indexOf(predResult1) != -1){
+                console.log("DDDDDDDDDDDDDDDDDDDDDDDDD");
+                ballCnt += 1;
+            };
+        };
+
+        console.log(strikeCnt+"Strike"+ballCnt+"Ball");
+    };
+
+ 
     $(document).ready(function(){
-        var result = [];
-        for(var i=0; i<3; i++){
-            result.push(Math.floor(Math.random() * 10));
-            if(i==0){
-                console.log("첫번째");
-            }else if(i==1){
-                console.log("두번째");
-            }else{
-                console.log("세번째");
-            }
-        }
-        console.log(result)
-    })
+        $('#swingBtn').click(function(){
+            swingCheck();
+        });
+    });
+
 </script> 
 </body>
 </html>

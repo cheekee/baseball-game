@@ -28,7 +28,7 @@ rule
 result : <span id="resultPlace"></span>
 <script type="text/javascript">
 
-    var result = [];  //정답 3자리 숫자가 담길 변수
+    var result = [];  //정답 3자리 담길 변수
     var strikeCnt = 0;  //strike수
     var ballCnt = 0;  //ball수
     var swingCnt = 0;  //swing수
@@ -48,47 +48,26 @@ result : <span id="resultPlace"></span>
             result.push(resultEle);
     };
     //나중에지우자
-    console.log("정답 : "+result);
+    console.log(result);
 
     //swing check
     function swingCheck(){
+        //여기도 아예 다시 하자 .... OTL....
         var predResult1 = $('#predResult1').val();
         var predResult2 = $('#predResult2').val();
         var predResult3 = $('#predResult3').val();
         if(result[0]==predResult1){
             strikeCnt += 1;
         }else{
-            if(result[1] == predResult1){
-                ballCnt += 1;
-            };
-            if(result[2] == predResult1){
-                ballCnt += 1;
-            };
+
         };
-        if(result[1]==predResult2){
-            strikeCnt += 1;
-        }else{
-            if(result[0] == predResult2){
-                ballCnt += 1;
-            };
-            if(result[2] == predResult2){
-                ballCnt += 1;
-            };
-        };
-        if(result[2]==predResult3){
-            strikeCnt += 1;
-        }else{
-            if(result[0] == predResult3){
-                ballCnt += 1;
-            };
-            if(result[1] == predResult3){
-                ballCnt += 1;
-            };
-        };
+
         if(strikeCnt==3){
+            //game success . and add init process
             alert("HOMERUN~!");
             swingCnt = 0;
         }else{
+            //도전실패 -> 스트라이크,볼 초기화  .  후에 기록에 남겨서 보여줘야한다.
             swingCnt += 1;
             $('#resultPlace').text(strikeCnt+"Strike"+ballCnt+"Ball");
             $('#swingCntPlace').text(swingCnt);

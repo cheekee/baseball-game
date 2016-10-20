@@ -8,6 +8,7 @@
 </head>
 <body>
 baseball game
+<input type="button" id="newGameBtn" value="NEW GAME">
 <!--
 rule
 1. 공격 횟수는 6번 (6번 안에 3스트라이크면 승리)
@@ -18,66 +19,98 @@ rule
 6. 다 틀리면 아웃 (게임은 끝나지 않는다)
  -->
 <br/>
-도전 횟수 : <span id="swingCntPlace"></span>
-<br/>
-<input id="predResult1" type="text" value="" maxlength="1">
-<input id="predResult2" type="text" value="" maxlength="1">
-<input id="predResult3" type="text" value="" maxlength="1">
+<input name="predResult" type="text" value="" maxlength="1">
+<input name="predResult" type="text" value="" maxlength="1">
+<input name="predResult" type="text" value="" maxlength="1">
 <input id="swingBtn" type="button" value="swing">
 <br/>
 result : <span id="resultPlace"></span>
+<table>
+    <thead>
+        <th>도전 횟수</th>
+        <th>입력한 숫자</th>
+        <th>결과</th>
+    </thead>
+    <tbody id="resultList">
+    </tbody>
+</table>
 <script type="text/javascript">
 
     var result = [];  //정답 3자리 담길 변수
+    var predResult = [];  //예상 정답 3자리 담길 변수
     var strikeCnt = 0;  //strike수
     var ballCnt = 0;  //ball수
     var swingCnt = 0;  //swing수
     
     //정답 숫자 세팅
-    for(var i=0; i<3; i++){
-        var resultEle = Math.floor(Math.random() * 10);
-        while(i==0 && resultEle==0){
-            resultEle = Math.floor(Math.random() * 10);
+    function settingResult(){
+        result = [];  //정답 3자리 담길 변수
+        predResult = [];  //예상 정답 3자리 담길 변수
+        strikeCnt = 0;  //strike수
+        ballCnt = 0;  //ball수
+        swingCnt = 0;  //swing수
+        for(var i=0; i<3; i++){
+            var resultEle = Math.floor(Math.random() * 10);
+            while(i==0 && resultEle==0){
+                resultEle = Math.floor(Math.random() * 10);
+            };
+            while(i==1 && resultEle==result[0]){
+                resultEle = Math.floor(Math.random() * 10);
+            };
+            while(i==2 && resultEle==result[0] || resultEle==result[1]){
+                resultEle = Math.floor(Math.random() * 10);
+            };
+                result.push(resultEle.toString());
         };
-        while(i==1 && resultEle==result[0]){
-            resultEle = Math.floor(Math.random() * 10);
-        };
-        while(i==2 && resultEle==result[0] || resultEle==result[1]){
-            resultEle = Math.floor(Math.random() * 10);
-        };
-            result.push(resultEle);
-    };
-    //나중에지우자
-    console.log(result);
+        //나중에지우자
+        console.log(result);
+    }
 
     //swing check
     function swingCheck(){
-        //여기도 아예 다시 하자 .... OTL....
-        var predResult1 = $('#predResult1').val();
-        var predResult2 = $('#predResult2').val();
-        var predResult3 = $('#predResult3').val();
-        if(result[0]==predResult1){
-            strikeCnt += 1;
-        }else{
+        //입력한 예상답변 배열 담기
+        $('[name=predResult]').each(function(idx){
+            var value = $(this).val();
+            predResult.push(value);
+        });
 
+        //예상답변 검사
+        for(i=0; i<3; i++){
+            if(predResult[i] == result[i]){
+                strikeCnt += 1;
+            }else{
+                if($.inArray(predResult[i], result) != -1){
+                    ballCnt += 1;
+                };
+            };
         };
 
         if(strikeCnt==3){
             //game success . and add init process
             alert("HOMERUN~!");
             swingCnt = 0;
+            result = [];
         }else{
-            //도전실패 -> 스트라이크,볼 초기화  .  후에 기록에 남겨서 보여줘야한다.
+            //도전실패
             swingCnt += 1;
-            $('#resultPlace').text(strikeCnt+"Strike"+ballCnt+"Ball");
+            ;
             $('#swingCntPlace').text(swingCnt);
-        }  
+            var html = "<tr><td>"+swingCnt+"</td>";
+            html += "<td>"+predResult+"</td>"
+            html += "<td>"+strikeCnt+"Strike"+ballCnt+"Ball</td></tr>";
+            $('#resultList').append(html);
+        };
         strikeCnt = 0;
         ballCnt = 0;
+        predResult = [];
     };
 
  
     $(document).ready(function(){
+        $('#newGameBtn').click(function(){
+            settingResult();
+        });
+
         $('#swingBtn').click(function(){
             swingCheck();
         });

@@ -15,8 +15,7 @@ rule
 2. 정답 숫자는 중복 되지 않는다
 3. 첫번째 자리 숫자는 0이 될 수 없다
 4. 숫자와 자리가 맞으면 스트라이크
-5. 숫자만 맞으면 볼
-6. 다 틀리면 아웃 (게임은 끝나지 않는다)
+5. 숫자는 맞고 자리가 다르면 볼
  -->
 <br/>
 <input name="predResult" type="text" value="" maxlength="1">
@@ -62,8 +61,6 @@ result : <span id="resultPlace"></span>
             };
                 result.push(resultEle.toString());
         };
-        //나중에지우자
-        console.log(result);
     }
 
     //swing check

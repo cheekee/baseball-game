@@ -7,5 +7,8 @@ simple rule<br>
 4. The number of attacks 6<br>
 5. The first number will not be zero<br>
 Please enter only numbers<br>
-<br><br>
+<br>
+<br>
+[Start Game](https://cheekee.github.io/baseball-game/)
+<br>
 Good luck ~

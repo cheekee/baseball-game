@@ -22,15 +22,15 @@ rule
 3. 첫번째 자리 숫자는 0이 될 수 없다
 4. 숫자와 자리가 맞으면 스트라이크
 5. 숫자는 맞고 자리가 다르면 볼
+#숫자만입력가능함
  -->
 <br/>
 <div id="contentDiv" style="display:none;">
-<input name="predResult" type="text" value="" maxlength="1">
-<input name="predResult" type="text" value="" maxlength="1">
-<input name="predResult" type="text" value="" maxlength="1">
+<input name="predResult" type="text" value="" maxlength="1" numberonly="true">
+<input name="predResult" type="text" value="" maxlength="1" numberonly="true">
+<input name="predResult" type="text" value="" maxlength="1" numberonly="true">
 <input id="swingBtn" type="button" value="swing">
 <br/>
-result : <span id="resultPlace"></span>
 <table>
     <thead>
         <th>도전 횟수</th>
@@ -49,7 +49,7 @@ result : <span id="resultPlace"></span>
     var ballCnt = 0;  //ball수
     var swingCnt = 0;  //swing수
     
-    //정답 숫자 세팅
+    //게임 초기화
     function settingResult(){
         $('#contentDiv').show(200);
         result = [];  //정답 3자리 담길 변수
@@ -57,6 +57,10 @@ result : <span id="resultPlace"></span>
         strikeCnt = 0;  //strike수
         ballCnt = 0;  //ball수
         swingCnt = 0;  //swing수
+        $('#resultList').children().remove();  //결과리스트삭제
+        $('[name=predResult]').each(function(idx){  //예상 정답 텍스트 삭제
+            $(this).val('');
+        });
         for(var i=0; i<3; i++){
             var resultEle = Math.floor(Math.random() * 10);
             while(i==0 && resultEle==0){
@@ -93,9 +97,11 @@ result : <span id="resultPlace"></span>
 
         if(strikeCnt==3){
             //game success . and add init process
-            alert("HOMERUN~!");
-            swingCnt = 0;
-            result = [];
+            alert("HOMERUN~! 세게임을 시작합니다.");
+            settingResult();
+        }else if(swingCnt==5){
+            alert("아웃! 새게임을 시작합니다.");
+            settingResult();
         }else{
             //도전실패
             swingCnt += 1;
@@ -114,6 +120,10 @@ result : <span id="resultPlace"></span>
  
     $(document).ready(function(){
         
+        //숫자만입력가능
+        $(document).on("keyup", "input:text[numberOnly]", function() {
+            $(this).val( $(this).val().replace(/[^0-9]/gi,"") );
+        });
         //상단 문구 설정
 
         $('#newGameBtn').click(function(){

@@ -9,6 +9,9 @@
     #topText {
         font-size: 25px;
     }
+    .predResult {
+        width: 20px;
+    }
 </style>
 </head>
 <body>
@@ -26,15 +29,15 @@ rule
  -->
 <br/>
 <div id="contentDiv" style="display:none;">
-<input name="predResult" type="text" value="" maxlength="1" numberonly="true">
-<input name="predResult" type="text" value="" maxlength="1" numberonly="true">
-<input name="predResult" type="text" value="" maxlength="1" numberonly="true">
+<input class="predResult" name="predResult" type="text" value="" maxlength="1" numberonly="true">
+<input class="predResult"name="predResult" type="text" value="" maxlength="1" numberonly="true">
+<input class="predResult"name="predResult" type="text" value="" maxlength="1" numberonly="true">
 <input id="swingBtn" type="button" value="swing">
 <br/>
 <table>
     <thead>
-        <th>도전 횟수</th>
-        <th>입력한 숫자</th>
+        <th>도전</th>
+        <th>입력숫자</th>
         <th>결과</th>
     </thead>
     <tbody id="resultList">
@@ -131,8 +134,25 @@ rule
         });
 
         $('#swingBtn').click(function(){
-            swingCheck();
+            var flag = "Y";
+            var predResult = [];
+            //같은 숫자 입력 방지
+            $('[name=predResult]').each(function(idx){
+                var value = $(this).val();
+                var resultIndex = predResult.indexOf(value);
+                if(resultIndex === -1 ){
+                }else{
+                    flag = "N";
+                }
+                predResult.push(value);
+            });
+            if(flag == "Y"){
+                swingCheck();
+            }else{
+                alert("같은 숫자를 입력할 수 없습니다.");
+            }
         });
+
     });
 
 </script> 

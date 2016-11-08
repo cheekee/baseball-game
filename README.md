@@ -9,6 +9,6 @@ simple rule<br>
 Please enter only numbers<br>
 <br>
 <br>
-[Start Game](https://cheekee.github.io/baseball-game/)
+[Start Game](https://cheekee.github.io/baseball-game/baseballgame.html)
 <br>
 Good luck ~
